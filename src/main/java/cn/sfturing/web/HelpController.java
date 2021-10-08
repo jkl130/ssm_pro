@@ -44,6 +44,18 @@ public class HelpController {
 		model.addAttribute("accountQA", accountQA);
 		return "help/helpIndex";
 	}
+
+	@RequestMapping(value = "ws",method = RequestMethod.GET)
+	public String ws(Model model) {
+		List<HelpQA> commonQA = helpQAService.findQAByType("常见问题");
+		List<HelpQA> signQA = helpQAService.findQAByType("如何注册");
+		List<HelpQA> accountQA = helpQAService.findQAByType("帐号管理");
+		model.addAttribute("commonQA", commonQA);
+		model.addAttribute("signQA", signQA);
+		model.addAttribute("accountQA", accountQA);
+		return "userCenter/ws";
+	}
+
 	/**
 	 * 意见反馈首页
 	 * 

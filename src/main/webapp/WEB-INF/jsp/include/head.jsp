@@ -34,6 +34,7 @@
 								href="<c:url value="/logOff" />"><strong>注销</strong></a>
 						</c:if>
 						<a class="navbar-brand" style="font-size: 12px;" href="/ssm_pro/help"><strong>帮助中心</strong></a>
+						<a class="navbar-brand" style="font-size: 12px;" href="/ssm_pro/ws" target="_parent"><strong>在线咨询</strong></a>
 					</div></li>
 			</ul>
 		</div>
