@@ -1,7 +1,5 @@
 package cn.sfturing.entity;
 
-import java.sql.Timestamp;
-
 /**
  * @author anjsh
  * @date 2021/10/13 14:25
@@ -20,7 +18,7 @@ public class Comment {
 
     private String answer;
 
-    private Timestamp createTime;
+    private String createTime;
 
     public int getId() {
         return id;
@@ -70,11 +68,11 @@ public class Comment {
         this.answer = answer;
     }
 
-    public Timestamp getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }
