@@ -1,13 +1,13 @@
 package cn.sfturing.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 /**
  * 时间工具类
  * 所有跟时间相关的工具集合
@@ -54,7 +54,7 @@ public class DateUtil {
 	 * @param format
 	 * @return
 	 */
-	public String getFormatTime(String time, DateFormat format){
+	public static String getFormatTime(String time, DateFormat format){
 		
 		SimpleDateFormat sdf = new SimpleDateFormat(format.getValue());// 格式化对象
 		

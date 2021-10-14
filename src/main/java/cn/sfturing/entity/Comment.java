@@ -1,5 +1,7 @@
 package cn.sfturing.entity;
 
+import cn.sfturing.utils.DateUtil;
+
 /**
  * @author anjsh
  * @date 2021/10/13 14:25
@@ -69,7 +71,7 @@ public class Comment {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return DateUtil.getFormatTime(createTime, DateUtil.DateFormat.YYYY_MM_DD_HH_mm_ss);
     }
 
     public void setCreateTime(String createTime) {

@@ -33,10 +33,11 @@
             【评论】 ${comment.content }
         </div>
         <hr/>
-        <div class="text-left">
-            【回复】 ${comment.answer }
-        </div>
-
+        <c:if test="${comment.answer!=null }">
+            <div class="text-left">
+                【回复】 ${comment.answer }
+            </div>
+        </c:if>
     </div>
 
     <!-- /. PAGE INNER  -->
