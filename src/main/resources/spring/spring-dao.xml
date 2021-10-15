@@ -13,9 +13,11 @@
 		<property name="locations">
 			<list>
 				<value>classpath:system_config.properties</value>
+				<value>classpath:alipay.properties</value>
 			</list>
 		</property>
 	</bean>
+
 	<!-- 2.数据库连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 配置连接池属性 -->

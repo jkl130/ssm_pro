@@ -1,10 +1,9 @@
 package cn.sfturing.dao;
 
-import java.util.List;
-
+import cn.sfturing.entity.OrderRecords;
 import org.apache.ibatis.annotations.Param;
 
-import cn.sfturing.entity.OrderRecords;
+import java.util.List;
 
 public interface OrderRecordsDao {
 	// 根据id查询单条预约记录
@@ -18,6 +17,8 @@ public interface OrderRecordsDao {
 
 	// 根据预约id更改订单状态为已提交订单
 	public int updateOrderSta1(int id);
+
+	public int updateOrderSuc1(int id);
 
 	// 根据预约id更改订单的疾病信息
 	public int updateOrderdiseaseInfo(@Param("diseaseInfo") String diseaseInfo, @Param("id") int id);
