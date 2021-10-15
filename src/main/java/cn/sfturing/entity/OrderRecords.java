@@ -36,6 +36,16 @@ public class OrderRecords {
     //创建预约时间
     private String createTime;
 
+    private String aliTradeNo;
+
+    public String getAliTradeNo() {
+        return aliTradeNo;
+    }
+
+    public void setAliTradeNo(String aliTradeNo) {
+        this.aliTradeNo = aliTradeNo;
+    }
+
     public int getId() {
         return id;
     }

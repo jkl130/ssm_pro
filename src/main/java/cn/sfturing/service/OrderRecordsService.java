@@ -1,8 +1,8 @@
 package cn.sfturing.service;
 
-import java.util.List;
-
 import cn.sfturing.entity.OrderRecords;
+
+import java.util.List;
 
 public interface OrderRecordsService {
 
@@ -22,6 +22,6 @@ public interface OrderRecordsService {
 	public int findLastId();
 	
 	//取消订单
-	public int cancelOrder(int id);
+	public void cancelOrder(int id);
 
 }

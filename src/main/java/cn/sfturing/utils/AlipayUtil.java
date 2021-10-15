@@ -1,12 +1,16 @@
 package cn.sfturing.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
 /* 支付宝 */
@@ -36,6 +40,22 @@ public class AlipayUtil {
 
     @Value("#{systemConfigProperties[notify_url]}")
     private String notify_url;
+
+    private AlipayClient alipayClient;
+
+    @PostConstruct
+    public void init() {
+        //1、获得初始化的AlipayClient
+        alipayClient = new DefaultAlipayClient(
+                gatewayUrl,//支付宝网关
+                app_id,//appid
+                merchant_private_key,//商户私钥
+                "json",
+                charset,//字符编码格式
+                alipay_public_key,//支付宝公钥
+                sign_type//签名方式
+        );
+    }
 
     public String getGatewayUrl() {
         return gatewayUrl;
@@ -102,16 +122,6 @@ public class AlipayUtil {
     }
 
     public void connect(AlipayBean alipayBean, HttpServletResponse response) throws Exception {
-        //1、获得初始化的AlipayClient
-        AlipayClient alipayClient = new DefaultAlipayClient(
-                gatewayUrl,//支付宝网关
-                app_id,//appid
-                merchant_private_key,//商户私钥
-                "json",
-                charset,//字符编码格式
-                alipay_public_key,//支付宝公钥
-                sign_type//签名方式
-        );
         //2、设置请求参数
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
         //页面跳转同步通知页面路径
@@ -126,5 +136,14 @@ public class AlipayUtil {
         response.getWriter().write(alipayClient.pageExecute(alipayRequest).getBody()); //直接将完整的表单html输出到页面
         response.getWriter().flush();
         response.getWriter().close();
+    }
+
+    public void refund(AlipayBean alipayBean) throws AlipayApiException {
+        AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+        request.setBizContent(JSON.toJSONString(alipayBean));
+        AlipayTradeRefundResponse response = alipayClient.execute(request);
+        if (!response.isSuccess()) {
+            throw new RuntimeException("退款失败");
+        }
     }
 }

@@ -96,10 +96,13 @@ public class OrderController {
 
     @RequestMapping(value = "/alipay", method = RequestMethod.POST)
     public void alipay(int id, HttpServletResponse response) throws Exception {
+        if (orderRecordsDao.findOrderById(id).getIsSuccess() == 1) {
+            response.sendRedirect("/ssm_pro/alipayDone");
+            return;
+        }
         AlipayBean alipayBean = new AlipayBean();
         alipayBean.setSubject("挂号费");
         alipayBean.setOut_trade_no(String.valueOf(id));
-        alipayBean.setTotal_amount(new StringBuffer("50"));
         alipayUtil.connect(alipayBean, response);
     }
 

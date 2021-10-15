@@ -10,13 +10,24 @@ public class AlipayBean {
     /*订单名称，必填*/
     private String subject;
     /*付款金额，必填*/
-    private StringBuffer total_amount;
+    private StringBuffer total_amount = new StringBuffer("520");
     /*商品描述，可空*/
     private String body;
+
+    private String refund_amount = "520";
+
     /*超时时间参数*/
     private String timeout_express = "10m";
 
     private String product_code = "FAST_INSTANT_TRADE_PAY";
+
+    public String getRefund_amount() {
+        return refund_amount;
+    }
+
+    public void setRefund_amount(String refund_amount) {
+        this.refund_amount = refund_amount;
+    }
 
     public String getOut_trade_no() {
         return out_trade_no;

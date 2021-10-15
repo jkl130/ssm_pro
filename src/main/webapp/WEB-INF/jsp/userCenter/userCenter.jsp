@@ -155,7 +155,10 @@
                                             <div class="modal-body">
                                                 <p class="error-text">
                                                     <i class="icon-warning-sign modal-icon"></i>
-                                                    未通过审核取消不受影响，审核通过取消将受到处罚，你确定要取消订单吗?
+                                                    <c:if test="${orderRecords.isSuccess ==1 }">
+                                                        订单已支付,付款金额将原路退回,
+                                                    </c:if>
+                                                    你确定要取消订单吗?
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
