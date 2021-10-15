@@ -5,7 +5,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -136,6 +138,13 @@ public class AlipayUtil {
         response.getWriter().write(alipayClient.pageExecute(alipayRequest).getBody()); //直接将完整的表单html输出到页面
         response.getWriter().flush();
         response.getWriter().close();
+    }
+
+    public boolean query(AlipayBean alipayBean) throws AlipayApiException {
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        request.setBizContent(JSON.toJSONString(alipayBean));
+        AlipayTradeQueryResponse response = alipayClient.execute(request);
+        return "TRADE_SUCCESS".equals(response.getTradeStatus());
     }
 
     public void refund(AlipayBean alipayBean) throws AlipayApiException {

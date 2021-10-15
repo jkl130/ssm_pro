@@ -11,6 +11,7 @@ import cn.sfturing.service.HospitalService;
 import cn.sfturing.service.OrderRecordsService;
 import cn.sfturing.utils.AlipayBean;
 import cn.sfturing.utils.AlipayUtil;
+import com.alipay.api.AlipayApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class OrderController {
     @RequestMapping(value = "/alipay", method = RequestMethod.POST)
     public void alipay(int id, HttpServletResponse response) throws Exception {
         if (orderRecordsDao.findOrderById(id).getIsSuccess() == 1) {
-            response.sendRedirect("/ssm_pro/alipayDone");
+            response.sendRedirect("/ssm_pro/alipayDone?out_trade_no=" + id);
             return;
         }
         AlipayBean alipayBean = new AlipayBean();
@@ -113,18 +114,30 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/alipayDone", method = RequestMethod.GET)
-    public String alipayDone() {
+    public String alipayDone(String out_trade_no) {
         log.info("支付完毕");
+        AlipayBean alipayBean = new AlipayBean();
+        alipayBean.setOut_trade_no(out_trade_no);
+        try {
+            if (alipayUtil.query(alipayBean)) {
+                orderRecordsDao.updateOrderSuc1(Integer.parseInt(out_trade_no));
+            }
+        } catch (AlipayApiException e) {
+            log.error("查询订单支付结果出错");
+        }
         return "order/orderPayDone";
     }
 
     @RequestMapping(value = "/payDone/{id}", method = RequestMethod.POST)
-    public String payDone(Model model, @PathVariable(value = "id") int id, HttpSession session) {
-        if (orderRecordsDao.findOrderById(id).getIsSuccess() != 1) {
-            // 在线支付, 确认订单状况
+    public String payDone(Model model, @PathVariable(value = "id") int id, HttpSession session) throws AlipayApiException {
+        if (alipay(id)) {
             return "order/orderPayFailed";
         }
 
+        return getResult(model, session);
+    }
+
+    private String getResult(Model model, HttpSession session) {
         CommonUser commonUser = (CommonUser) session.getAttribute("userInfo");
         if (commonUser != null) {
             // 得到用户的收藏记录
@@ -149,10 +162,12 @@ public class OrderController {
      * @return
      */
     @RequestMapping(value = "/orderUserCenter", method = RequestMethod.POST)
-    public String orderUserCenter(Model model, int userID, int id, String diseaseInfo, String optionsRadios, HttpSession session) {
-        if (optionsRadios.equals("2") && orderRecordsDao.findOrderById(id).getIsSuccess() != 1) {
+    public String orderUserCenter(Model model, int userID, int id, String diseaseInfo, String optionsRadios, HttpSession session) throws AlipayApiException {
+        if ("2".equals(optionsRadios)) {
             // 在线支付, 确认订单状况
-            return "order/orderPayFailed";
+            if (alipay(id)) {
+                return "order/orderPayFailed";
+            }
         }
         // 得到用户的收藏记录
         List<Favourite> favourites = favouriteDao.findFavHos(userID);
@@ -174,6 +189,21 @@ public class OrderController {
 
     }
 
+    private boolean alipay(int id) throws AlipayApiException {
+        OrderRecords orderById = orderRecordsDao.findOrderById(id);
+        if (orderById.getIsSuccess() != 1) {
+            AlipayBean alipayBean = new AlipayBean();
+            alipayBean.setOut_trade_no(String.valueOf(id));
+            if (!alipayUtil.query(alipayBean)) {
+                // 在线支付, 确认订单状况
+                return true;
+
+            }
+            orderRecordsDao.updateOrderSuc1(id);
+        }
+        return false;
+    }
+
     /**
      * 取消订单
      */
@@ -181,22 +211,7 @@ public class OrderController {
     public String cancelOrder(Model model, @PathVariable(value = "id") int id, HttpSession session) {
         // 通过id更改订单状态
         orderRecordsService.cancelOrder(id);
-        CommonUser commonUser = (CommonUser) session.getAttribute("userInfo");
-        if (commonUser != null) {
-            // 得到用户的收藏记录
-            List<Favourite> favourites = favouriteDao.findFavHos(commonUser.getUserId());
-            List<Hospital> hospitals = null;
-            if (favourites.size() != 0) {
-                hospitals = hospitalService.findFavHos(favourites);
-            }
-            model.addAttribute("hospitals", hospitals);
-            // 得到用户的个人订单
-            List<OrderRecords> orderRecords = orderRecordsService.findOrderRecordsByUserID(commonUser.getUserId());
-            model.addAttribute("orderRecords", orderRecords);
-            model.addAttribute("commonUser", commonUser);
-            return "userCenter/userCenter";
-        }
-        return "userCenter/userCenter";
+        return getResult(model, session);
     }
 
 }
