@@ -35,7 +35,7 @@
         <!-- /. ROW  -->
         <hr/>
         <div class="col-md-12 text-left">
-            <p>感谢你的评论😊😊</p><a href="/ssm_pro/index">返回主页</a>
+            <p>感谢你的评论😊😊</p><a href="javascript:void(history.back())">返回上一页面</a>
         </div>
 
     </div>

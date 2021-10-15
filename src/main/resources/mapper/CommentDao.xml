@@ -3,9 +3,9 @@
 <mapper namespace="cn.sfturing.dao.CommentDao">
     <insert id="insertComment">
         insert into comment
-            (doctor_id, title, content, user_id)
+            (doctor_id, title, content, user_id, user_name, ctime)
             value
-            (#{doctorId}, #{title}, #{content}, #{userId})
+            (#{doctorId}, #{title}, #{content}, #{userId}, #{userName}, #{ctime})
     </insert>
     <select id="findByDoctorId" resultType="cn.sfturing.entity.Comment">
         select *

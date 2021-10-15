@@ -6,6 +6,7 @@ import cn.sfturing.entity.Comment;
 import cn.sfturing.entity.FeedBack;
 import cn.sfturing.entity.HelpQA;
 import cn.sfturing.service.HelpQAService;
+import cn.sfturing.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,7 @@ public class HelpController {
     //意见反馈
     @RequestMapping(value = "/commentInfo", method = RequestMethod.POST)
     public String comment(Comment comment) {
+        comment.setCtime(DateUtil.getCurrentTime(DateUtil.DateFormat.YYYY_MM_DD_HH_mm_ss));
         commentDao.insertComment(comment);
         return "doctor/thanksComment";
 

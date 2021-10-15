@@ -42,7 +42,7 @@ public class DateUtil {
 	 * @param format
 	 * @return
 	 */
-	public String getCurrentTime(DateFormat format){
+	public static String getCurrentTime(DateFormat format){
 		
 		Date date = new Date();// 当前日期
 		SimpleDateFormat sdf = new SimpleDateFormat(format.getValue());// 格式化对象

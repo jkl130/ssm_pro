@@ -196,26 +196,66 @@
                             <div style="border-bottom: 1px solid #ccc;"></div>
                         </div>
                         <hr/>
-                        <table class="table table-striped table-hover text-left">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>评论名称</th>
-                                <th>发布日期</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="panel-group col-lg-12" id="accordion" style="margin-top: 20px">
+                            <c:if test="${comments.size()==0}">
+                                暂无评论
+                            </c:if>
                             <c:forEach var="comment" items="${comments}" varStatus="status">
-                                <tr>
-                                    <td>${ status.index + 1}</td>
-                                    <td><a href="<c:url value='/commentInfo/${comment.id}' />">${comment.title}</a>
-                                    </td>
-                                    <td>${comment.createTime }</td>
-                                </tr>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapse${status.index}">
+                                                    ${comment.title}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse${status.index}" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div>
+                                                <span class="glyphicon glyphicon-user"></span>
+                                                <span>${comment.userName}</span>
+                                                <span class="summary-text small">${comment.ctime}</span>
+                                            </div>
+                                            <div>${comment.content}</div>
+                                            <c:if test="${comment.answer!=null }">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                    <span>${doctor.doctorName}</span>
+                                                    <span class="summary-text small">${comment.atime}</span>
+                                                </div>
+                                                <div>${comment.answer}</div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:forEach>
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
+                    <%--                    <div class="tab-pane fade text-left" id="comment">--%>
+                    <%--                        <div class="col-md-12 ">--%>
+                    <%--                            <div style="border-bottom: 1px solid #ccc;"></div>--%>
+                    <%--                        </div>--%>
+                    <%--                        <hr/>--%>
+                    <%--                        <table class="table table-striped table-hover text-left">--%>
+                    <%--                            <thead>--%>
+                    <%--                            <tr>--%>
+                    <%--                                <th>#</th>--%>
+                    <%--                                <th>评论名称</th>--%>
+                    <%--                                <th>发布日期</th>--%>
+                    <%--                            </tr>--%>
+                    <%--                            </thead>--%>
+                    <%--                            <tbody>--%>
+                    <%--                            <c:forEach var="comment" items="${comments}" varStatus="status">--%>
+                    <%--                                <tr>--%>
+                    <%--                                    <td>${ status.index + 1}</td>--%>
+                    <%--                                    <td><a href="<c:url value='/commentInfo/${comment.id}' />">${comment.title}</a>--%>
+                    <%--                                    </td>--%>
+                    <%--                                    <td>${comment.createTime }</td>--%>
+                    <%--                                </tr>--%>
+                    <%--                            </c:forEach>--%>
+                    <%--                            </tbody>--%>
+                    <%--                        </table>--%>
+                    <%--                    </div>--%>
                     <div class="tab-pane fade text-left" id="commentNew">
                         <div class="col-md-12 ">
                             <div style="border-bottom: 1px solid #ccc;"></div>
@@ -227,6 +267,8 @@
                                    id="userId">
                             <input type="hidden" value="${doctor.id }" name="doctorId"
                                    id="doctorId">
+                            <input type="hidden" value="${userInfo.userName }" name="userName"
+                                   id="userName">
                             <div class="col-lg-12">
                                 <label for="title">摘要</label><br/>
                                 <input type="text" name="title" id="title"><br/>
@@ -262,5 +304,10 @@
         $("#feedbackForm").submit();
         return false;
     }
+
+    $("#idl dt").click(function () {
+        var me = $(this);
+        me.nextUntil("dt").toggle();
+    });
 </script>
 </html>

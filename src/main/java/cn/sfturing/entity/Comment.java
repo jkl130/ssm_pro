@@ -22,6 +22,36 @@ public class Comment {
 
     private String createTime;
 
+    private String userName;
+
+    private String ctime;
+
+    private String atime;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
+
+    public String getAtime() {
+        return atime;
+    }
+
+    public void setAtime(String atime) {
+        this.atime = atime;
+    }
+
     public int getId() {
         return id;
     }
