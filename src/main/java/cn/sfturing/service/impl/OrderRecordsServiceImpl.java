@@ -1,6 +1,7 @@
 package cn.sfturing.service.impl;
 
 import cn.sfturing.dao.OrderRecordsDao;
+import cn.sfturing.entity.OrderDateAndTime;
 import cn.sfturing.entity.OrderRecords;
 import cn.sfturing.service.OrderRecordsService;
 import cn.sfturing.utils.AlipayBean;
@@ -34,6 +35,16 @@ public class OrderRecordsServiceImpl implements OrderRecordsService {
     public List<OrderRecords> findOrderRecordsByUserID(int UserID) {
         // TODO Auto-generated method stub
         return orderRecordsDao.findOrderRecordsByUserID(UserID);
+    }
+
+    @Override
+    public List<OrderDateAndTime> findOrderRecordsDateByDoctorID(int doctorId) {
+        return orderRecordsDao.findOrderRecordsDateByDoctorID(doctorId);
+    }
+
+    @Override
+    public List<OrderRecords> findOrderRecordsByDoctorID(int doctorId) {
+        return orderRecordsDao.findOrderRecordsByDoctorID(doctorId);
     }
 
     @Override

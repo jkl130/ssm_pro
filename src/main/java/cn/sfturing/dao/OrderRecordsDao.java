@@ -1,5 +1,6 @@
 package cn.sfturing.dao;
 
+import cn.sfturing.entity.OrderDateAndTime;
 import cn.sfturing.entity.OrderRecords;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +15,12 @@ public interface OrderRecordsDao {
 
 	// 根据用户id查找预约记录
 	public List<OrderRecords> findOrderRecordsByUserID(int UserID);
+
+	// 根据医生id查找预约记录
+	public List<OrderRecords> findOrderRecordsByDoctorID(int doctorId);
+
+	// 根据医生id查找所有预约记录日期
+	public List<OrderDateAndTime> findOrderRecordsDateByDoctorID(int doctorId);
 
 	// 根据预约id更改订单状态为已提交订单
 	public int updateOrderSta1(int id);

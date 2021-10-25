@@ -17,6 +17,8 @@ public class OrderRecords {
     private String officesName;
     //医生姓名
     private String doctorName;
+	//医生Id
+	private int doctorId;
     //预约日期
     private String transactDate;
     //预约时间段
@@ -157,15 +159,16 @@ public class OrderRecords {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
-
-    @Override
-    public String toString() {
-        return "OrderRecords [id=" + id + ", UserID=" + UserID + ", hospitalName=" + hospitalName + ", officesName="
-                + officesName + ", doctorName=" + doctorName + ", transactDate=" + transactDate + ", transactTime="
-                + transactTime + ", diseaseInfo=" + diseaseInfo + ", isSuccess=" + isSuccess + ", isSend=" + isSend
-                + ", isCancel=" + isCancel + ", isFinish=" + isFinish + ", orderVer=" + orderVer + ", createTime="
-                + createTime + "]";
-    }
+	public int getDoctorId() { return doctorId;}
+	public void setDoctorId(int doctorId) { this.doctorId = doctorId; }
+	@Override
+	public String toString() {
+		return "OrderRecords [id=" + id + ", UserID=" + UserID + ", hospitalName=" + hospitalName + ", officesName="
+				+ officesName + ", doctorId =" + doctorId + ",doctorName=" + doctorName + ", transactDate=" + transactDate + ", transactTime="
+				+ transactTime + ", diseaseInfo=" + diseaseInfo + ", isSuccess=" + isSuccess + ", isSend=" + isSend
+				+ ", isCancel=" + isCancel + ", isFinish=" + isFinish + ", orderVer=" + orderVer + ", createTime="
+				+ createTime + "]";
+	}
 
 
 }

@@ -1,12 +1,10 @@
 package cn.sfturing.web;
 
 import cn.sfturing.dao.CommentDao;
-import cn.sfturing.entity.Comment;
-import cn.sfturing.entity.CommonCondition;
-import cn.sfturing.entity.Doctor;
-import cn.sfturing.entity.Hospital;
+import cn.sfturing.entity.*;
 import cn.sfturing.service.DoctorService;
 import cn.sfturing.service.HospitalService;
+import cn.sfturing.service.OrderRecordsService;
 import cn.sfturing.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,8 @@ public class DoctorController {
     private HospitalService hospitalService;
     @Autowired
     private PageUtils pageUtils;
+    @Autowired
+    private OrderRecordsService OrderService;
 
     @Autowired
     private CommentDao commentDao;
@@ -78,6 +79,29 @@ public class DoctorController {
         model.addAttribute("comments", comments);
 
         return "doctor/doctorInfoShow";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/doctorOrderShow/{id}", method = RequestMethod.GET)
+    public List<OrderDateAndTime> hosOrderInfoShow(@PathVariable(value = "id") int id) {
+        List<OrderRecords> orderLists = OrderService.findOrderRecordsByDoctorID(id);
+        List<OrderDateAndTime> date = OrderService.findOrderRecordsDateByDoctorID(id);
+        for (int m = 0; m < date.size(); m++) {
+            for (int n = 0; n < orderLists.size(); n++) {
+                if (orderLists.get(n).getTransactDate().equals(date.get(m).getTransactDate())) {
+                    if (orderLists.get(n).getTransactTime().equals("8:00-11:00")) {
+                        date.get(m).setS(false);
+                    }
+                    if (orderLists.get(n).getTransactTime().equals("13:00-15:00")) {
+                        date.get(m).setZ(false);
+                    }
+                    if (orderLists.get(n).getTransactTime().equals("15:00-18:00")) {
+                        date.get(m).setX(false);
+                    }
+                }
+            }
+        }
+        return date;
     }
 
     /**
