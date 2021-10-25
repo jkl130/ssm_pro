@@ -37,6 +37,8 @@
                         <a class="navbar-brand" style="font-size: 12px;" href="/ssm_pro/help"><strong>帮助中心</strong></a>
                         <a class="navbar-brand" style="font-size: 12px;" href="http://106.55.246.169/im/consumer"
                            target="_blank"><strong>在线咨询</strong></a>
+                        <a class="navbar-brand" style="font-size: 12px;" href="http://106.55.246.169"
+                           target="_blank"><strong>管理后台</strong></a>
                     </div>
                 </li>
             </ul>

@@ -6,8 +6,19 @@
     <!-- 通过医院名称地区信息 -->
     <select id="findOfficeByHosName" resultType="cn.sfturing.entity.Office"
             parameterType="java.lang.String">
-        SELECT *
-        FROM `hos_office`
+        SELECT id
+             , offices_name
+             , hospital_name
+             , offices_honor
+             , offices_equipment
+             , offices_about
+             , offices_diagnosis_scope
+             , rec
+             , (select count(1)
+                from doctor
+                WHERE offices_name = ho.offices_name
+                  and hospital_name = #{hospitalName}) as doctor_num
+        FROM `hos_office` ho
         WHERE hospital_name =
               #{hospitalName}
     </select>

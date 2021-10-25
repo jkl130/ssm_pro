@@ -1,21 +1,7 @@
 package cn.sfturing.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import cn.sfturing.dao.FavouriteDao;
+import cn.sfturing.dao.OrderRecordsDao;
 import cn.sfturing.entity.CommonCondition;
 import cn.sfturing.entity.CommonUser;
 import cn.sfturing.entity.Hospital;
@@ -23,6 +9,15 @@ import cn.sfturing.entity.Office;
 import cn.sfturing.service.HospitalService;
 import cn.sfturing.service.OfficeService;
 import cn.sfturing.utils.PageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -41,6 +36,9 @@ public class HospitalController {
 	private PageUtils pageUtils;
 	@Autowired
 	private FavouriteDao favouriteDao;
+	@Autowired
+	private OrderRecordsDao orderRecordsDao;
+
 
 	/**
 	 * 医院主界面(推荐医院)
@@ -75,7 +73,12 @@ public class HospitalController {
 		// 通过医院的名称返回医院科室信息
 		List<Office> office = officeService.findOfficeByHosName(hospital.getHospitalName());
 		// 预留通知查询
-		
+
+		// 科室数量
+		hospital.setHospitalOfficesNum(office.size());
+		// 年门诊量
+		hospital.setOutpatientNum(orderRecordsDao.countByHosName(hospital.getHospitalName()));
+
 		model.addAttribute("hos", hospital);
 		model.addAttribute("office", office);
 		return "hospital/hosInfoShow";
