@@ -86,10 +86,6 @@ public class OrderController {
         log.info("插入订单，待提交！");
         // 插入订单
         orderRecordsService.insertOrderRecords(orderRecords);
-        // 设置最后插入的id(不会发生并发性问题，是根据线程查询的)
-        int id = orderRecordsService.findLastId();
-        System.out.println(id);
-        orderRecords.setId(id);
         model.addAttribute("orderRecords", orderRecords);
         model.addAttribute("commonUser", commonUser);
         model.addAttribute("doctorImg", doctorImg);

@@ -12,7 +12,7 @@
     </select>
 
     <!-- 插入用户 -->
-    <insert id="insertOrderRecords">
+    <insert id="insertOrderRecords" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO order_records
         (userID, hospital_name, offices_name, doctor_Id, doctor_name, transact_date, transact_time, order_ver)
             VALUE
