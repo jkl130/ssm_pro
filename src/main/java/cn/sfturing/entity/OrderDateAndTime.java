@@ -7,11 +7,11 @@ package cn.sfturing.entity;
 public class OrderDateAndTime {
     private String transactDate;
 
-    private boolean s;
+    private boolean s = true;
 
-    private boolean z;
+    private boolean z = true;
 
-    private boolean x;
+    private boolean x = true;
 
     public boolean isS() {
         return s;

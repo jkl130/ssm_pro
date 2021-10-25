@@ -66,7 +66,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order(String orderInfoValue, String hospitalName, String officesName, String doctorName,
-                        String userIdenf, Model model, String doctorImg) {
+                        String userIdenf, Model model, String doctorImg, Integer doctorId) {
         // 分解传入的时间以及时间段
         String orderInfoValueArry[] = orderInfoValue.split(",");
         String transact_date = orderInfoValueArry[0];
@@ -75,6 +75,7 @@ public class OrderController {
         OrderRecords orderRecords = new OrderRecords();
         // 设置orderRecords
         orderRecords.setUserID((int) commonUser.getUserId());
+        orderRecords.setDoctorId(doctorId);
         orderRecords.setTransactTime(transact_time);
         orderRecords.setTransactDate(transact_date);
         orderRecords.setHospitalName(hospitalName);
