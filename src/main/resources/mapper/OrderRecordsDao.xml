@@ -37,8 +37,7 @@
         WHERE doctor_id = #{doctorId}
           AND order_ver = 1
           AND is_cancel = 0
-          AND is_send = 0
-          And is_success = 0
+          AND is_finish = 0
     </select>
 
     <select id="findOrderRecordsDateByDoctorID" resultType="cn.sfturing.entity.OrderDateAndTime"
@@ -48,8 +47,7 @@
         WHERE doctor_id = #{doctorId}
           AND order_ver = 1
           AND is_cancel = 0
-          AND is_send = 0
-          And is_success = 0
+          AND is_finish = 0
         order BY transact_date DESC
     </select>
     <!--通过ID查询预约记录 -->
@@ -62,7 +60,7 @@
         FROM `order_records`
         WHERE is_cancel = 0
           AND is_send = 0
-          And is_success = 1;
+          And order_ver = 1;
     </select>
     <select id="countByHosName" resultType="java.lang.Integer">
         select count(1)
