@@ -104,8 +104,7 @@
                 </div>
             </div>
         </div>
-        <form class="form-search form-horizontal" id="orderInfo" action="<c:url value='/orderUserCenter'/>"
-              method="post">
+        <form class="form-search form-horizontal" id="orderInfo" method="post">
             <div class="panel panel-primary text-left">
                 <div class="panel-heading">
                     <h3 class="panel-title">疾病信息</h3>
@@ -220,13 +219,14 @@
 <!-- Javascript -->
 <script src="${mybasePath}assets/js/jquery.backstretch.min.js"></script>
 <script type="text/javascript">
-    function payDone(){
+    function payDone() {
         var $orderInfo = $("#orderInfo");
         $orderInfo.attr("target", "_self");
         $orderInfo.attr("action", "<c:url value='/orderUserCenter'/>");
         $orderInfo.submit();
         return false;
     }
+
     function submitOrder() {
         var $check_yuyue_rule = $("#check_yuyue_rule");
         var $orderInfo = $("#orderInfo");
@@ -238,6 +238,8 @@
                 $('#myModal').modal('show');
                 return false;
             }
+            $orderInfo.attr("target", "_self");
+            $orderInfo.attr("action", "<c:url value='/orderUserCenter'/>");
             $orderInfo.submit();
             return false;
         }
