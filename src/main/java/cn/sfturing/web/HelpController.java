@@ -7,8 +7,6 @@ import cn.sfturing.entity.FeedBack;
 import cn.sfturing.entity.HelpQA;
 import cn.sfturing.service.HelpQAService;
 import cn.sfturing.utils.DateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +28,6 @@ public class HelpController {
 
     @Autowired
     private CommentDao commentDao;
-
-    private static Logger log = LoggerFactory.getLogger(HelpController.class);
 
     /**
      * 用户帮助首页
@@ -64,7 +60,6 @@ public class HelpController {
     @RequestMapping(value = "/feedBackInfo", method = RequestMethod.POST)
     public String feedBack(FeedBack feedBack) {
         feedBackDao.inserFeedBack(feedBack);
-        log.info("有用户反馈意见" + feedBack.getUserId() + "***" + feedBack.getContent());
         return "feedBack/thanksFeedBack";
 
     }

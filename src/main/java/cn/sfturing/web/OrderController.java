@@ -66,7 +66,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order(String orderInfoValue, String hospitalName, String officesName, String doctorName,
-                        String userIdenf, Model model, String doctorImg, Integer doctorId) {
+                        String userIdenf, Model model, String doctorImg, Integer doctorId, Integer hosId) {
         // 分解传入的时间以及时间段
         String orderInfoValueArry[] = orderInfoValue.split(",");
         String transact_date = orderInfoValueArry[0];
@@ -81,9 +81,9 @@ public class OrderController {
         orderRecords.setHospitalName(hospitalName);
         orderRecords.setOfficesName(officesName);
         orderRecords.setDoctorName(doctorName);
+        orderRecords.setHosId(hosId);
         // 设置预约识别码 0代表只选择时间段，未提交订单
         orderRecords.setOrderVer(0);
-        log.info("插入订单，待提交！");
         // 插入订单
         orderRecordsService.insertOrderRecords(orderRecords);
         model.addAttribute("orderRecords", orderRecords);

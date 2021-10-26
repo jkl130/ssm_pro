@@ -39,6 +39,15 @@ public class OrderRecords {
     private String createTime;
 
     private String aliTradeNo;
+    private int hosId;
+
+    public int getHosId() {
+        return hosId;
+    }
+
+    public void setHosId(int hosId) {
+        this.hosId = hosId;
+    }
 
     public String getAliTradeNo() {
         return aliTradeNo;

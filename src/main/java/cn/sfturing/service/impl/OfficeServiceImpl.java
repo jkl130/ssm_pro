@@ -1,15 +1,14 @@
 package cn.sfturing.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.sfturing.dao.OfficeDao;
 import cn.sfturing.entity.Hospital;
 import cn.sfturing.entity.Office;
 import cn.sfturing.service.OfficeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OfficeServiceImpl implements OfficeService {
@@ -17,9 +16,9 @@ public class OfficeServiceImpl implements OfficeService {
 	private OfficeDao officeDao;
 
 	@Override
-	public List<Office> findOfficeByHosName(String hospitalName) {
+	public List<Office> findOfficeByHosId(Integer hosId) {
 
-		return officeDao.findOfficeByHosName(hospitalName);
+		return officeDao.findOfficeByHosName(hosId);
 	}
 
 	@Override

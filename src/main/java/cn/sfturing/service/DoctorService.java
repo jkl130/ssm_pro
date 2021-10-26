@@ -1,16 +1,17 @@
 package cn.sfturing.service;
 
-import java.util.List;
-import java.util.Map;
-
 import cn.sfturing.entity.Doctor;
 import cn.sfturing.entity.Hospital;
 
+import java.util.List;
+import java.util.Map;
+
 public interface DoctorService {
 	// 根据地区医院名称和科室查询
-	public List<Doctor> findAreaByHosAndOfficeName(String hospitalName, String OfficeName);
 
-	// 通过id查询医生信息
+    List<Doctor> findByHosAndOfficeId(Integer hosId, Integer officeId);
+
+    // 通过id查询医生信息
 	public Doctor findDoctorById(int id);
 
 	// 推荐开通预约挂号的医院的医生

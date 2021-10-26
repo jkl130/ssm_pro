@@ -5,7 +5,7 @@
 <mapper namespace="cn.sfturing.dao.OfficeDao">
     <!-- 通过医院名称地区信息 -->
     <select id="findOfficeByHosName" resultType="cn.sfturing.entity.Office"
-            parameterType="java.lang.String">
+            parameterType="int">
         SELECT id
              , offices_name
              , hospital_name
@@ -14,13 +14,14 @@
              , offices_about
              , offices_diagnosis_scope
              , rec
+             , hos_id
              , (select count(1)
                 from doctor
-                WHERE offices_name = ho.offices_name
-                  and hospital_name = #{hospitalName}) as doctor_num
+                WHERE hos_id = #{hosId}
+                  and office_id = ho.id) as doctor_num
         FROM `hos_office` ho
-        WHERE hospital_name =
-              #{hospitalName}
+        WHERE hos_id =
+              #{hosId}
     </select>
 
     <!-- 通过ID地区信息 -->
@@ -37,23 +38,23 @@
             parameterType="java.util.Map">
         SELECT *
         FROM `hos_office`
-        WHERE 1=1 AND hospital_name in
-        <foreach item="hospital" index="index" collection="list" open="("
+        WHERE hos_id in
+        <foreach item="hos" index="index" collection="list" open="("
                  separator="," close=")">
-            #{hospital.hospitalName}
+            #{hos.id}
         </foreach>
         ORDER BY
         rec desc
-        limit #{start},#{size}
+        limit 20
     </select>
     <!--推荐科室数量 -->
     <select id="findOfficeByReNum" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM `hos_office`
-        WHERE 1=1 AND hospital_name in
-        <foreach item="hospitalName" index="index" collection="list"
-                 open="(" separator="," close=")">
-            #{hospitalName.hospitalName}
+        WHERE hos_id in
+        <foreach item="hos" index="index" collection="list" open="("
+                 separator="," close=")">
+            #{hos.id}
         </foreach>
     </select>
 
@@ -62,31 +63,29 @@
             parameterType="cn.sfturing.entity.Office">
         SELECT count(*) FROM
         `hos_office`
-        where 1 = 1
-        <if test="hospitalName != null">
-            AND hospital_name LIKE '%${hospitalName}%'
-        </if>
-        <if test="officesName != null">
-            AND offices_name LIKE '%${officesName}%'
-        </if>
-
+        <where>
+            <if test="hospitalName != null">
+                AND hos_id in (select id from hospital where hospital_name like concat(#{hospitalName},'%'))
+            </if>
+            <if test="officesName != null">
+                AND offices_name LIKE concat(#{officesName},'%')
+            </if>
+        </where>
     </select>
 
     <!--根据条件查询已开通预约的医院 -->
     <select id="findOfficeByCondition" resultType="cn.sfturing.entity.Office"
             parameterType="cn.sfturing.entity.Office">
         SELECT * FROM `hos_office`
-        WHERE 1=1
-        <if test="hospitalName != null">
-            AND hospital_name LIKE '%${hospitalName}%'
-        </if>
-        <if test="officesName != null">
-            AND offices_name LIKE '%${officesName}%'
-        </if>
-        ORDER BY
-        RAND()
+        <where>
+            <if test="hospitalName != null">
+                AND hos_id in (select id from hospital where hospital_name like concat(#{hospitalName},'%'))
+            </if>
+            <if test="officesName != null">
+                AND offices_name LIKE concat(#{officesName},'%')
+            </if>
+        </where>
         limit #{start},#{size}
-
     </select>
 
 

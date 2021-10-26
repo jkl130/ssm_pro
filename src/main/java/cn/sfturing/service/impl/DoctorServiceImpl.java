@@ -1,15 +1,14 @@
 package cn.sfturing.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.sfturing.dao.DoctorDao;
 import cn.sfturing.entity.Doctor;
 import cn.sfturing.entity.Hospital;
 import cn.sfturing.service.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -18,9 +17,9 @@ public class DoctorServiceImpl implements DoctorService {
 	private DoctorDao doctorDao;
 
 	@Override
-	public List<Doctor> findAreaByHosAndOfficeName(String hospitalName, String OfficeName) {
+	public List<Doctor> findByHosAndOfficeId(Integer hosId, Integer officeId) {
 		// TODO Auto-generated method stub
-		return doctorDao.findAreaByHosAndOfficeName(hospitalName, OfficeName);
+		return doctorDao.findByHosAndOfficeId(hosId, officeId);
 	}
 
 	// 查询医生

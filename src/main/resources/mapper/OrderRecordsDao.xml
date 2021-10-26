@@ -62,10 +62,10 @@
           AND is_send = 0
           And order_ver = 1;
     </select>
-    <select id="countByHosName" resultType="java.lang.Integer">
+    <select id="countByHosId" resultType="java.lang.Integer">
         select count(1)
         from order_records
-        where hospital_name = #{hospitalName}
+        where hos_id = #{hospitalName}
           and is_finish = 1
           and create_time > MAKEDATE(YEAR(NOW()), 1)
     </select>

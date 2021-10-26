@@ -72,7 +72,7 @@ public class DoctorController {
     @RequestMapping(value = "/doctorInfoShow/{id}", method = RequestMethod.GET)
     public String hosInfoShow(Model model, @PathVariable(value = "id") int id) {
         Doctor doctor = doctorService.findDoctorById(id);
-        Hospital hospital = hospitalService.findHosByName(doctor.getHospitalName());
+        Hospital hospital = hospitalService.findHosById(doctor.getHosId());
         List<Comment> comments = commentDao.findByDoctorId(id);
         model.addAttribute("hos", hospital);
         model.addAttribute("doctor", doctor);

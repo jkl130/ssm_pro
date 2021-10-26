@@ -48,5 +48,5 @@ public interface OrderRecordsDao {
     // 取消订单设置状态为2
     public int cancelOrder2(int id);
 
-    int countByHosName(String hospitalName);
+    int countByHosId(int hosId);
 }

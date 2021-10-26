@@ -66,23 +66,6 @@
 
 			</c:forEach>
 		</div>
-		<%-- <c:if test="${pages.totalPage > 0}">
-			<ul class="pagination pagination-lg">
-				<li <c:if test="${pages.currentPage < 1}">class="disabled"</c:if>><a
-					href="#">&laquo;</a></li>
-				<c:forEach begin="${pages.pageNumStart }" end="${pages.pageNumEnd }"
-					varStatus="status">
-					<li
-						<c:if test="${status.index == pages.currentPage }">class="active"</c:if>>
-						<a href="javascript:void(0);" onclick="tijiao('${status.index }')">
-							${status.index } </a>
-					</li>
-				</c:forEach>
-				<li
-					<c:if test="${pages.currentPage> pages.totalPage}">class="disabled"</c:if>><a
-					href="#">&raquo;</a></li>
-			</ul>
-		</c:if> --%>
 		<!-- /. PAGE INNER  -->
 	</div>
 	<!-- /. PAGE WRAPPER  -->
@@ -92,12 +75,4 @@
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/bootstrap/js/jquery.min.js"></script>
 <script src="assets/js/jquery.backstretch.min.js"></script>
-<!--不需要背景 <script src="assets/js/scripts.js"></script> -->
-<!-- <script type="text/javascript">
-	jQuery(document).ready(function() {
-	
-    $.backstretch("assets/img/backgrounds/1.jpg");
-    
-    });
-    </script> -->
 </html>

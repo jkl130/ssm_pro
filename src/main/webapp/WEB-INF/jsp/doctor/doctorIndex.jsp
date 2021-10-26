@@ -102,9 +102,9 @@
 <!--不需要背景 <script src="assets/js/scripts.js"></script> -->
 <!-- <script type="text/javascript">
 	jQuery(document).ready(function() {
-	
+
     $.backstretch("assets/img/backgrounds/1.jpg");
-    
+
     });
     </script> -->
 <script type="text/javascript">

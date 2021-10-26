@@ -131,7 +131,8 @@
                             <input type="hidden" id="orderInfoValue" name="orderInfoValue" value=""/>
                             <input type="hidden" id="hospitalName" name="hospitalName" value="${doctor.hospitalName }"/>
                             <input type="hidden" id="officesName" name="officesName" value="${doctor.officesName }"/>
-								<input type="hidden" id="doctorId" name="doctorId" value="${doctor.id }"/>
+                            <input type="hidden" id="doctorId" name="doctorId" value="${doctor.id }"/>
+                            <input type="hidden" id="hosId" name="doctorId" value="${doctor.hosId }"/>
                             <input type="hidden" id="doctorName" name="doctorName" value="${doctor.doctorName }"/>
                             <input type="hidden" id="userIdenf" name="userIdenf" value="${userInfo.userIdenf }"/>
                             <input type="hidden" id="userEmail" name="userEmail" value="${userInfo.userEmail }"/>
