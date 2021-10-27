@@ -41,6 +41,16 @@ public class OrderRecords {
     private String aliTradeNo;
     private int hosId;
 
+    private int officeId;
+
+    public int getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(int officeId) {
+        this.officeId = officeId;
+    }
+
     public int getHosId() {
         return hosId;
     }
