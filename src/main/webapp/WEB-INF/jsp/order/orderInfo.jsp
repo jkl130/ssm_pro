@@ -77,19 +77,19 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-12">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <h3>姓名：${commonUser.userName }&nbsp;</h3>
                     </div>
                     <div class="col-md-1">
                         <h3>性别：${commonUser.userSex }&nbsp;</h3>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h3>&nbsp;身份证：${commonUser.userIdenf }</h3>
                     </div>
                     <!-- <div class="col-md-2">
                         <h3>&nbsp;1996-10-14</h3>
                     </div> -->
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <h3>&nbsp;电话：${commonUser.userMobile }</h3>
                     </div>
                 </div>
