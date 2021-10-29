@@ -45,10 +45,10 @@
                 </div>
                 <div class="col-md-7">
                     <p>
-                        <font color="#eb6864">门诊类型：${orderRecords.officesName }</font>
+                        <span style="color: #eb6864; ">门诊类型：普通</span>
                     </p>
                     <p>
-                        <font color="#eb6864">费用：50元</font>
+                        <span style="color: #eb6864; ">费用：50元</span>
                     </p>
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="panel-body">
                 <div class="col-md-12">
                     <div class="col-md-2">
-                        <h3>${orderRecords.transactDate }</h3>
+                        <h3>就诊日期：${orderRecords.transactDate }</h3>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -78,10 +78,10 @@
             <div class="panel-body">
                 <div class="col-md-12">
                     <div class="col-md-1">
-                        <h3>${commonUser.userName }&nbsp;</h3>
+                        <h3>姓名：${commonUser.userName }&nbsp;</h3>
                     </div>
                     <div class="col-md-1">
-                        <h3>${commonUser.userSex }&nbsp;</h3>
+                        <h3>性别：${commonUser.userSex }&nbsp;</h3>
                     </div>
                     <div class="col-md-4">
                         <h3>&nbsp;身份证：${commonUser.userIdenf }</h3>
@@ -90,7 +90,7 @@
                         <h3>&nbsp;1996-10-14</h3>
                     </div> -->
                     <div class="col-md-2">
-                        <h3>&nbsp;${commonUser.userMobile }</h3>
+                        <h3>&nbsp;电话：${commonUser.userMobile }</h3>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -115,7 +115,7 @@
                                                value="${orderRecords.id }" name="id" id="id">
 
                     <div class="form-group">
-                        <label for="textArea" class="col-lg-1 control-label">疾病信息</label>
+                        <label for="diseaseInfo" class="col-lg-1 control-label">疾病信息</label>
                         <div class="col-lg-10">
 								<textarea class="form-control" rows="3" id="diseaseInfo" name="diseaseInfo"
                                           style="margin: 0px -6.8375px 0px 0px; width: 424px; height: 80px;"
@@ -149,28 +149,6 @@
                 </div>
             </div>
         </form>
-        <!-- <div class="panel panel-primary text-left">
-            <div class="panel-heading">
-                <h3 class="panel-title">邮箱验证</h3>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-lg-1 text-right" style="margin-top: 2px">
-                        <p style="width: 80px">验证码：</p>
-                    </div>
-                    <div class="col-lg-2 text-left" style="margin-top: 2px">
-                        <input type="text" class="form-control" id="inputEmail"
-                            placeholder="邮箱验证码">
-                    </div>
-                    <div class="col-lg-1 text-right" style="margin-top: 2px">
-                        <input id="btnSendCode" type="button" value="发送验证码" onclick="sendMessage()" />
-                        <input type="button" id="btn" value="免费获取验证码"
-                            style="color: #ffffff; background-color: #eb6864; border-color: #eb6864; display: inline-block; margin-bottom: 0; font-weight: normal; text-align: center; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 8px 12px; font-size: 15px; line-height: 1.42857143; border-radius: 4px; -webkit-user-select: none;" />
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
         <div class="text-left">
             <label><input id="check_yuyue_rule" type="checkbox"
                           name="check_yuyue_rule" value="1"
@@ -246,25 +224,4 @@
         alert("请确认您的基本信息！")
     }
 </script>
-<!-- <script type="text/javascript">
-	var wait = 300;
-	function time(o) {
-		if (wait == 0) {
-			o.removeAttribute("disabled");
-			o.value = "免费获取验证码";
-			wait = 300;
-		} else {
-
-			o.setAttribute("disabled", true);
-			o.value = "重新发送(" + wait + ")";
-			wait--;
-			setTimeout(function() {
-				time(o)
-			}, 1000)
-		}
-	}
-	document.getElementById("btn").onclick = function() {
-		time(this);
-	}
-</script> -->
 </html>

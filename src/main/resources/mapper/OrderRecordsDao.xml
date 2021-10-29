@@ -14,10 +14,11 @@
     <!-- 插入用户 -->
     <insert id="insertOrderRecords" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO order_records
-        (userID, hospital_name, offices_name, doctor_Id, doctor_name, transact_date, transact_time, order_ver)
+        (userID, hospital_name, offices_name, doctor_Id, doctor_name, transact_date, transact_time, order_ver, hos_id,
+         office_id)
             VALUE
             (#{userID}, #{hospitalName}, #{officesName}, #{doctorId}, #{doctorName}, #{transactDate}, #{transactTime},
-             #{orderVer})
+             #{orderVer}, #{hosId}, #{officeId})
     </insert>
 
     <!--通过userId查询预约记录 -->

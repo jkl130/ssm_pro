@@ -161,12 +161,11 @@ public class OrderController {
      */
     @RequestMapping(value = "/orderUserCenter", method = RequestMethod.POST)
     public String orderUserCenter(Model model, int userID, int id, String diseaseInfo, String optionsRadios, HttpSession session) throws AlipayApiException {
-        if ("2".equals(optionsRadios)) {
-            // 在线支付, 确认订单状况
-            if (alipay(id)) {
-                return "order/orderPayFailed";
-            }
+        if (alipay(id) && "2".equals(optionsRadios)) {
+            // 在线支付且失败, 返回支付错误页面
+            return "order/orderPayFailed";
         }
+
         // 得到用户的收藏记录
         List<Favourite> favourites = favouriteDao.findFavHos(userID);
         List<Hospital> hospitals = null;
