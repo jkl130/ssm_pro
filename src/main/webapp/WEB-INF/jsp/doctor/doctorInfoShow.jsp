@@ -54,8 +54,6 @@
                 <c:if test='${hos.isOpen=="1" }'>
                     <li class=""><a href="#comment" data-toggle="tab"
                                     aria-expanded="false">医院评论</a></li>
-                    <li class=""><a href="#commentNew" data-toggle="tab"
-                                    aria-expanded="false">新增评论</a></li>
                 </c:if>
             </ul>
             <div class="col-md-12">
@@ -198,8 +196,28 @@
                         <div class="col-md-12 ">
                             <div style="border-bottom: 1px solid #ccc;"></div>
                         </div>
+                            <form class="form-search form-horizontal" id="feedbackForm"
+                                  action="/ssm_pro/commentInfo" method="post">
+                                <input type="hidden" value="${userInfo.userId }" name="userId"
+                                       id="userId">
+                                <input type="hidden" value="${doctor.id }" name="doctorId"
+                                       id="doctorId">
+                                <input type="hidden" value="${userInfo.userName }" name="userName"
+                                       id="userName">
+                                <div class="col-lg-12">
+                                    <label for="title">摘要</label><br/>
+                                    <input type="text" name="title" id="title" style="border: 1px solid #cccccc"><br/>
+                                    <label for="content">评论详细</label><br/>
+                                    <textarea class="form-control" rows="3" id="content" name="content"
+                                              style="margin: 0px -6.8375px 0px 0px; width: 100%; height: 150px; border: 1px solid #cccccc"
+                                              placeholder="感谢您的评论" required></textarea>
+                                </div>
+                            </form>
+                            <div class="col-lg-8 text-center" style="margin-top: 7px;">
+                                <button onclick="feedback()" class="btn btn-primary btn-lg">提交评论</button>
+                            </div>
                         <hr/>
-                        <div class="panel-group col-lg-12" id="accordion" style="margin-top: 20px">
+                        <div class="panel-group col-lg-12" id="accordion" style="margin-top: 20px" >
                             <c:if test="${comments.size()==0}">
                                 暂无评论
                             </c:if>
@@ -259,32 +277,6 @@
                     <%--                            </tbody>--%>
                     <%--                        </table>--%>
                     <%--                    </div>--%>
-                    <div class="tab-pane fade text-left" id="commentNew">
-                        <div class="col-md-12 ">
-                            <div style="border-bottom: 1px solid #ccc;"></div>
-                        </div>
-                        <hr/>
-                        <form class="form-search form-horizontal" id="feedbackForm"
-                              action="/ssm_pro/commentInfo" method="post">
-                            <input type="hidden" value="${userInfo.userId }" name="userId"
-                                   id="userId">
-                            <input type="hidden" value="${doctor.id }" name="doctorId"
-                                   id="doctorId">
-                            <input type="hidden" value="${userInfo.userName }" name="userName"
-                                   id="userName">
-                            <div class="col-lg-12">
-                                <label for="title">摘要</label><br/>
-                                <input type="text" name="title" id="title"><br/>
-                                <label for="content">评论详细</label><br/>
-                                <textarea class="form-control" rows="3" id="content" name="content"
-                                          style="margin: 0px -6.8375px 0px 0px; width: 560px; height: 250px;"
-                                          placeholder="感谢您的评论" required></textarea>
-                            </div>
-                        </form>
-                        <div class="col-lg-8 text-center" style="margin-top: 7px;">
-                            <button onclick="feedback()" class="btn btn-primary btn-lg">提交评论</button>
-                        </div>
-                    </div>
                 </c:if>
             </div>
         </div>
@@ -300,11 +292,31 @@
 <script type="text/javascript">
     function feedback() {
         var userId = $("#userId").val();
-        if (userId == "") {
+        if (userId === "") {
             alert("请登录后评论！");
             return false;
+        }else{
+            if($("#title").val() === ""){
+                alert("请填写摘要！");
+                return false;
+            } else if($("#content").val() === ""){
+                alert("评论详细不能为空！");
+                return false;
+            } else {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "text",
+                    url: "/ssm_pro/commentInfo" ,
+                    data: $('#feedbackForm').serialize(),
+                    success: function (html) {
+                        document.getElementById("accordion").innerHTML=html;
+                    },
+                    error: function() {
+                        alert("发生异常，请稍后再尝试评论！");
+                    }
+                });
+            }
         }
-        $("#feedbackForm").submit();
         return false;
     }
 

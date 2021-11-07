@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -65,11 +66,22 @@ public class HelpController {
     }
 
     //意见反馈
+    @ResponseBody
     @RequestMapping(value = "/commentInfo", method = RequestMethod.POST)
-    public String comment(Comment comment) {
+    public String comment(Model model,Comment comment) {
         comment.setCtime(DateUtil.getCurrentTime(DateUtil.DateFormat.YYYY_MM_DD_HH_mm_ss));
         commentDao.insertComment(comment);
-        return "doctor/thanksComment";
+        List<Comment> comments = commentDao.findByDoctorId(comment.getDoctorId());
+        model.addAttribute("comments", comments);
+        StringBuilder html = new StringBuilder();
+        for (int i = 0; i < comments.size(); i++) {
+            html.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" data-parent=\"#accordion\"href=\"#collapse").append(i).append("\">").append(comments.get(i).getTitle()).append("</a></h4></div><div id=\"collapse${status.index}\" class=\"panel-collapse collapse in\"><div class=\"panel-body\"><div><span class=\"glyphicon glyphicon-user\"></span><span>").append(comments.get(i).getUserName()).append("</span><span class=\"summary-text small\">").append(comments.get(i).getCtime()).append("</span></div><div>").append(comments.get(i).getContent()).append("</div>");
+            if(comments.get(i).getAnswer()!=null){
+                html.append("<div><span class=\"glyphicon glyphicon-user\"></span><span>${doctor.doctorName}</span><span class=\"summary-text small\">").append(comments.get(i).getAtime()).append("</span></div><div>").append(comments.get(i).getAnswer()).append("</div>");
+            }
+            html.append("</div></div></div>");
+        }
+        return html.toString();
 
     }
 }
