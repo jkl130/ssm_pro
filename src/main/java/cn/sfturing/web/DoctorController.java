@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,22 +85,28 @@ public class DoctorController {
     @ResponseBody
     @RequestMapping(value = "/doctorOrderShow/{id}", method = RequestMethod.GET)
     public List<OrderDateAndTime> hosOrderInfoShow(@PathVariable(value = "id") int id) {
-        List<OrderRecords> orderLists = OrderService.findOrderRecordsByDoctorID(id);
-        List<OrderDateAndTime> date = OrderService.findOrderRecordsDateByDoctorID(id);
-        for (int m = 0; m < date.size(); m++) {
-            for (int n = 0; n < orderLists.size(); n++) {
-                if (orderLists.get(n).getTransactDate().equals(date.get(m).getTransactDate())) {
-                    if (orderLists.get(n).getTransactTime().equals("8:00-11:00")) {
-                        date.get(m).setS(false);
-                    }
-                    if (orderLists.get(n).getTransactTime().equals("13:00-15:00")) {
-                        date.get(m).setZ(false);
-                    }
-                    if (orderLists.get(n).getTransactTime().equals("15:00-18:00")) {
-                        date.get(m).setX(false);
-                    }
-                }
+        // 1 根据医生id查询订单记录
+        List<OrderRecords> orderList = OrderService.findOrderRecordsByDoctorID(id);
+        // 2 创建一个订单记录大小的list用来存放当天每个时间段的预约情况
+        List<OrderDateAndTime> date = new ArrayList<>(orderList.size());
+
+        // 3 遍历所有订单信息
+        for (OrderRecords orderRecords : orderList) {
+            // 3.1 创建预约时间信息对象
+            OrderDateAndTime orderDateAndTime = new OrderDateAndTime(orderRecords.getTransactDate());
+            String transactTime = orderRecords.getTransactTime();
+            if (transactTime.equals("8:00-11:00")) {
+                // 3.2 如果订单的预约时间段为该时间段, 就将该时间段设置为不可预约
+                orderDateAndTime.setS(false);
             }
+            if (transactTime.equals("13:00-15:00")) {
+                orderDateAndTime.setZ(false);
+            }
+            if (transactTime.equals("15:00-18:00")) {
+                orderDateAndTime.setX(false);
+            }
+            // 3.3 将对象放入list中
+            date.add(orderDateAndTime);
         }
         return date;
     }

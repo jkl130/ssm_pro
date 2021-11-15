@@ -13,6 +13,10 @@ public class OrderDateAndTime {
 
     private boolean x = true;
 
+    public OrderDateAndTime(String transactDate) {
+        this.transactDate = transactDate;
+    }
+
     public boolean isS() {
         return s;
     }

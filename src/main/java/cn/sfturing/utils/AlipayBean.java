@@ -10,11 +10,11 @@ public class AlipayBean {
     /*订单名称，必填*/
     private String subject;
     /*付款金额，必填*/
-    private StringBuffer total_amount = new StringBuffer("520");
+    private StringBuffer total_amount = new StringBuffer("50");
     /*商品描述，可空*/
     private String body;
 
-    private String refund_amount = "520";
+    private String refund_amount = "50";
 
     /*超时时间参数*/
     private String timeout_express = "10m";
