@@ -72,13 +72,7 @@ public class OrderRecordsServiceImpl implements OrderRecordsService {
             // 需要退款
             AlipayBean alipayBean = new AlipayBean();
             alipayBean.setOut_trade_no(String.valueOf(id));
-            try {
-                alipayUtil.refund(alipayBean);
-            } catch (Exception e) {
-                // 退款失败
-                LOGGER.error(e.getMessage());
-                return;
-            }
+            alipayUtil.refund(alipayBean);
         }
         orderRecordsDao.cancelOrder1(id);
     }

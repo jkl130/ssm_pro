@@ -14,7 +14,7 @@
 	session.setAttribute("mybasePath", basePath);
 %>
 <!-- CSS -->
-<jsp:include page="../include/headtag.jsp" />
+<jsp:include page="WEB-INF/jsp/include/headtag.jsp" />
 <!-- <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"> -->
 <link rel="stylesheet"
@@ -23,70 +23,21 @@
 <link rel="stylesheet" href="${mybasePath}assets/css/style.css">
 </head>
 <body>
-	<jsp:include page="../include/head.jsp" />
-	<jsp:include page="../include/menu.jsp" />
+	<jsp:include page="WEB-INF/jsp/include/head.jsp" />
+	<jsp:include page="WEB-INF/jsp/include/menu.jsp" />
 	<div id="page-wrapper" style="margin-top: 50px;">
 		<div id="page-inner">
 			<div class="row">
-				<div class="col-md-12">
-					<!-- <br />
-					<br />
-					<h2>预留页面标题</h2>
-					<h5>预留内容小标题.</h5> -->
-					<div id="tip" class="jumbotron text-left" style="padding-left: 45px;background-color: #ffffff">
-						<div class="modal-header" style="padding-left: 45px;background-color: #ffffff">
-							<button id="close" name = "close" type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">×</button>
-						</div>
-						<h2>	
-							医院挂号系统上线了
-							</h1>
-							<p>为提高患者预约效率,改善患者预约体验,建立预约挂号统一平台.</p>
-							<p>
-								<a class="btn btn-primary btn-lg" href="/ssm_pro/help/" >了解挂号系统</a>
-							</p>
-					</div>
-
+				<div class="col-md-12 text-left">
+					<h3>404</h3>
 				</div>
 			</div>
 			<!-- /. ROW  -->
 			<hr />
-			<div class="carousel slide" id="carousel-630453">
-				<ol class="carousel-indicators">
-					<li data-slide-to="0" data-target="#carousel-630453"></li>
-					<li data-slide-to="1" data-target="#carousel-630453" class="active"></li>
-					<li data-slide-to="2" data-target="#carousel-630453"></li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="item">
-						<img alt="" src="${mybasePath}assets/img/1.jpg" />
-						<div class="carousel-caption">
-							<p>挂号系统已上线</p>
-							<p>热烈庆祝挂号系统上线,已经支持网上预付功能。</p>
-						</div>
-					</div>
-					<div class="item active">
-						<img alt="" src="${mybasePath}assets/img/2.jpg" />
-						<div class="carousel-caption">
-							<p>全国医院查询功能</p>
-							<p>支持4万余医院信息查询，助您准确查询医院信息。</p>
-						</div>
-					</div>
-					<div class="item">
-						<img alt="" src="${mybasePath}assets/img/3.jpg" />
-						<div class="carousel-caption">
-							<p>常见疾病</p>
-							<p>查询常见疾病，提前预防，准确医治。</p>
-						</div>
-					</div>
-				</div>
-				<a class="left carousel-control" href="#carousel-630453"
-					data-slide="prev"><span
-					class="glyphicon glyphicon-chevron-left"></span></a> <a
-					class="right carousel-control" href="#carousel-630453"
-					data-slide="next"><span
-					class="glyphicon glyphicon-chevron-right"></span></a>
+			<div class="col-md-12 text-left">
+				<p>你访问了一个不存在的页面，<a href="/ssm_pro/index">点此</a>返回主页</p>
 			</div>
+
 		</div>
 		<!-- /. PAGE INNER  -->
 

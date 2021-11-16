@@ -116,19 +116,16 @@ public class OrderController {
         log.info("支付完毕");
         AlipayBean alipayBean = new AlipayBean();
         alipayBean.setOut_trade_no(out_trade_no);
-        try {
-            if (alipayUtil.query(alipayBean)) {
-                orderRecordsDao.updateOrderSuc1(Integer.parseInt(out_trade_no));
-            }
-        } catch (AlipayApiException e) {
-            log.error("查询订单支付结果出错");
+        if (alipayUtil.query(alipayBean)) {
+            orderRecordsDao.updateOrderSuc1(Integer.parseInt(out_trade_no));
+            return "order/orderPayDone";
         }
-        return "order/orderPayDone";
+        return "order/orderPayFailed";
     }
 
     @RequestMapping(value = "/payDone/{id}", method = RequestMethod.POST)
     public String payDone(Model model, @PathVariable(value = "id") int id, HttpSession session) throws AlipayApiException {
-        if (alipay(id)) {
+        if (!alipay(id)) {
             return "order/orderPayFailed";
         }
 
@@ -160,8 +157,8 @@ public class OrderController {
      * @return
      */
     @RequestMapping(value = "/orderUserCenter", method = RequestMethod.POST)
-    public String orderUserCenter(Model model, int userID, int id, String diseaseInfo, String optionsRadios, HttpSession session) throws AlipayApiException {
-        if (alipay(id) && "2".equals(optionsRadios)) {
+    public String orderUserCenter(Model model, int userID, int id, String diseaseInfo, String optionsRadios, HttpSession session) {
+        if (!alipay(id) && "2".equals(optionsRadios)) {
             // 在线支付且失败, 返回支付错误页面
             return "order/orderPayFailed";
         }
@@ -186,19 +183,19 @@ public class OrderController {
 
     }
 
-    private boolean alipay(int id) throws AlipayApiException {
+    private boolean alipay(int id) {
         OrderRecords orderById = orderRecordsDao.findOrderById(id);
         if (orderById.getIsSuccess() != 1) {
             AlipayBean alipayBean = new AlipayBean();
             alipayBean.setOut_trade_no(String.valueOf(id));
             if (!alipayUtil.query(alipayBean)) {
                 // 在线支付, 确认订单状况
-                return true;
+                return false;
 
             }
             orderRecordsDao.updateOrderSuc1(id);
         }
-        return false;
+        return true;
     }
 
     /**

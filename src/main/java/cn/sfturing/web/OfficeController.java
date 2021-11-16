@@ -40,7 +40,6 @@ public class OfficeController {
     public String officeIdex(Model model, @PathVariable("page") int page) {
         // 查询推荐的医院
         List<Hospital> hospitalRe = hospitalService.findHosByRe();
-
         Map<String, Object> officeMap = new HashMap<String, Object>();
         officeMap.put("list", hospitalRe);
         List<Office> officeRe = officeService.findOfficeByRe(officeMap);

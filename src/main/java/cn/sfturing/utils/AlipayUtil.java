@@ -8,7 +8,8 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeQueryResponse;
-import com.alipay.api.response.AlipayTradeRefundResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,8 @@ public class AlipayUtil {
     private String notify_url;
 
     private AlipayClient alipayClient;
+
+    private static Logger log = LoggerFactory.getLogger(AlipayUtil.class);
 
     @PostConstruct
     public void init() {
@@ -135,23 +138,36 @@ public class AlipayUtil {
         //3、请求支付宝进行付款，并获取支付结果
         //返回付款信息
         response.setContentType("text/html;charset=" + charset);
-        response.getWriter().write(alipayClient.pageExecute(alipayRequest).getBody()); //直接将完整的表单html输出到页面
+        try {
+            //直接将完整的表单html输出到页面
+            response.getWriter().write(alipayClient.pageExecute(alipayRequest).getBody());
+        } catch (Exception e) {
+            throw new RuntimeException("在线支付暂时不可用，请稍后再试！");
+        }
         response.getWriter().flush();
         response.getWriter().close();
     }
 
-    public boolean query(AlipayBean alipayBean) throws AlipayApiException {
+    public boolean query(AlipayBean alipayBean) {
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         request.setBizContent(JSON.toJSONString(alipayBean));
-        AlipayTradeQueryResponse response = alipayClient.execute(request);
+        AlipayTradeQueryResponse response;
+        try {
+            response = alipayClient.execute(request);
+        } catch (AlipayApiException e) {
+            throw new RuntimeException("查询支付结果出错");
+        }
         return "TRADE_SUCCESS".equals(response.getTradeStatus());
     }
 
-    public void refund(AlipayBean alipayBean) throws AlipayApiException {
+    public void refund(AlipayBean alipayBean) {
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         request.setBizContent(JSON.toJSONString(alipayBean));
-        AlipayTradeRefundResponse response = alipayClient.execute(request);
-        if (!response.isSuccess()) {
+        try {
+            if (!alipayClient.execute(request).isSuccess()) {
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
             throw new RuntimeException("退款失败");
         }
     }
