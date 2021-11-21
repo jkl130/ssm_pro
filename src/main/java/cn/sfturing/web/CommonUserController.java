@@ -81,7 +81,7 @@ public class CommonUserController {
 			// 如果是2，那么登录成功，返回index
 			model.addAttribute("user", commonUser);
 			session.setAttribute("userInfo", commonUser);
-			return "index/index";
+			return "redirect:/";
 		} else if (result == 1) {
 			error = "密码错误";
 			log.info(error);
@@ -365,7 +365,7 @@ public class CommonUserController {
 		}
 		CommonUser commonUser1 = commonUserService.findCommonUserByEmail(commonUser.getUserEmail());
 		session.setAttribute("userInfo", commonUser1);
-		return "index/index";
+		return "redirect:/";
 	}
 
 	/**
@@ -393,7 +393,7 @@ public class CommonUserController {
 			model.addAttribute("commonUser", commonUser);
 			return "userCenter/userCenter";
 		}
-		return "index/index";
+		return "redirect:/";
 	}
 
 	/**

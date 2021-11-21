@@ -61,7 +61,7 @@
 					</div>
 					<br /> <br />
 					<hr width="1300px">
-					<p style="margin-left: 20px;">期末项目组</p>
+					<p style="margin-left: 20px;">毕业设计项目组</p>
 				</div>
 				<div class="tab-pane fade text-left" id="statement">
 					<div class="col-md-12 ">

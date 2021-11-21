@@ -31,7 +31,7 @@
         FROM `hospital`
         WHERE is_open = 1
         ORDER BY rec desc
-        limit 12
+        limit 1
     </select>
     <!-- 查询全部支持预约医院的数量 -->
     <select id="findOrderHosNum" resultType="java.lang.Integer" parameterType="cn.sfturing.entity.Hospital">
