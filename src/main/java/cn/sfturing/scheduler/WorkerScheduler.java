@@ -33,7 +33,7 @@ public class WorkerScheduler {
     /**
      * 定时任务 每两分钟执行一次
      */
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "*/30 * * * * ?")
     public void createWorkTime() {
         // 1 查找需要发送通知的订单(未取消、发送且预约状态码为1的订单)
         final List<OrderRecords> orderRecords = orderRecordsDao.findNeedNoticeOrder();
