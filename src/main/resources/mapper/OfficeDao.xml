@@ -27,10 +27,22 @@
     <!-- 通过ID地区信息 -->
     <select id="findOfficeById" resultType="cn.sfturing.entity.Office"
             parameterType="int">
-        SELECT *
-        FROM `hos_office`
-        WHERE id =
+        SELECT ho.id
+             , ho.offices_name
+             , ho.hospital_name
+             , offices_honor
+             , offices_equipment
+             , offices_about
+             , offices_diagnosis_scope
+             , ho.rec
+             , ho.hos_id
+             , count(*) as doctor_num
+        FROM `hos_office` ho,
+             doctor doc
+        WHERE ho.id =
               #{id}
+          and ho.id = doc.office_id
+        group by ho.id
     </select>
 
     <!--推荐科室 -->
